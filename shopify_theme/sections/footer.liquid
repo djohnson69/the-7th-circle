@@ -1,0 +1,95 @@
+<footer class="border-t border-[#333333] bg-[#1a1a1a] py-16">
+  <div class="container mx-auto px-4">
+    <div class="grid grid-cols-1 md:grid-cols-4 gap-12">
+      
+      <!-- Brand -->
+      <div class="col-span-1 md:col-span-1">
+        <a href="{{ routes.root_url }}">
+          <div class="flex items-center gap-2 cursor-pointer mb-4">
+            {% if section.settings.footer_logo != blank %}
+              <img src="{{ section.settings.footer_logo | img_url: 'medium' }}" alt="{{ shop.name }}" class="h-8 w-auto">
+            {% endif %}
+            <span class="font-display text-2xl font-bold tracking-tighter text-[#f2f2f2]">
+              THE 7TH CIRCLE
+            </span>
+          </div>
+        </a>
+        <p class="mt-4 text-sm text-gray-400 leading-relaxed">
+          {{ section.settings.brand_text }}
+        </p>
+        <!-- Social Icons would go here using settings -->
+      </div>
+
+      <!-- Links -->
+      <div>
+        <h4 class="font-display text-lg font-bold uppercase tracking-wider text-[#f2f2f2] mb-6">Shop</h4>
+        <ul class="space-y-3">
+          {% for link in linklists.footer.links %}
+            <li><a href="{{ link.url }}" class="text-sm text-gray-400 hover:text-[#D00000] uppercase tracking-wide">{{ link.title }}</a></li>
+          {% endfor %}
+        </ul>
+      </div>
+
+      <div>
+        <h4 class="font-display text-lg font-bold uppercase tracking-wider text-[#f2f2f2] mb-6">Support</h4>
+        <ul class="space-y-3">
+          <!-- Example static links or a second menu -->
+          <li><a href="/pages/faq" class="text-sm text-gray-400 hover:text-[#D00000] uppercase tracking-wide">FAQ</a></li>
+          <li><a href="/pages/shipping-returns" class="text-sm text-gray-400 hover:text-[#D00000] uppercase tracking-wide">Shipping & Returns</a></li>
+          <li><a href="/pages/contact" class="text-sm text-gray-400 hover:text-[#D00000] uppercase tracking-wide">Contact Us</a></li>
+        </ul>
+      </div>
+
+      <!-- Newsletter -->
+      <div>
+        <h4 class="font-display text-lg font-bold uppercase tracking-wider text-[#f2f2f2] mb-6">Join The Ranks</h4>
+        <p class="text-sm text-gray-400 mb-4">
+          Subscribe for exclusive drops and intel.
+        </p>
+        {% form 'customer' %}
+          <div class="flex gap-2">
+            <input 
+              type="email" 
+              name="contact[email]"
+              placeholder="ENTER EMAIL" 
+              class="flex-1 bg-[#121212] border border-[#333333] px-4 py-2 text-sm font-sans focus:outline-none focus:border-[#D00000] uppercase placeholder:text-gray-600 text-white"
+            />
+            <button type="submit" class="bg-[#D00000] px-4 py-2 text-[#1a1a1a] font-display font-bold uppercase tracking-wider hover:bg-[#D00000]/90">
+              Join
+            </button>
+          </div>
+        {% endform %}
+      </div>
+
+    </div>
+    
+    <div class="mt-16 border-t border-[#333333] pt-8 flex flex-col md:flex-row justify-between items-center gap-4">
+      <p class="text-xs text-gray-400 uppercase tracking-wider">
+        &copy; {{ 'now' | date: "%Y" }} The 7th Circle LLC. All rights reserved.
+      </p>
+      <div class="flex gap-6">
+        <a href="/pages/privacy-policy" class="text-xs text-gray-400 hover:text-[#D00000] uppercase tracking-wider">Privacy Policy</a>
+        <a href="/pages/terms-of-service" class="text-xs text-gray-400 hover:text-[#D00000] uppercase tracking-wider">Terms of Service</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+{% schema %}
+{
+  "name": "Footer",
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "footer_logo",
+      "label": "Footer Logo"
+    },
+    {
+      "type": "textarea",
+      "id": "brand_text",
+      "label": "Brand Text",
+      "default": "We build apparel for those who walk the path less traveled."
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,24 @@
+<div class="container mx-auto px-4 py-12">
+  <div class="flex flex-col md:flex-row justify-between items-end mb-8 border-b border-[#333333] pb-4">
+    <h1 class="text-4xl md:text-5xl font-display font-bold uppercase tracking-tighter text-[#f2f2f2]">
+      {{ collection.title }}
+    </h1>
+    <p class="text-gray-400 font-sans text-sm uppercase tracking-widest">
+      {{ collection.products_count }} Products
+    </p>
+  </div>
+
+  <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+    {% for product in collection.products %}
+      {% render 'product-card', product: product %}
+    {% else %}
+      <p class="text-gray-400">No products found in this collection.</p>
+    {% endfor %}
+  </div>
+
+  {% if paginate.pages > 1 %}
+    <div class="mt-12 flex justify-center">
+      {{ paginate | default_pagination }}
+    </div>
+  {% endif %}
+</div>

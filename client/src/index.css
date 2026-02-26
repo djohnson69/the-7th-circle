@@ -1,0 +1,68 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+
+@custom-variant dark (&:is(.dark *));
+
+@theme inline {
+  /* Colors - H S L format */
+  /* Backgrounds: Deep Charcoal / Black */
+  --color-background: 0 0% 7%; /* #121212 */
+  --color-foreground: 0 0% 95%; /* #f2f2f2 */
+
+  --color-card: 0 0% 10%;
+  --color-card-foreground: 0 0% 95%;
+
+  --color-popover: 0 0% 10%;
+  --color-popover-foreground: 0 0% 95%;
+
+  /* Primary: Blood Red */
+  --color-primary: 354 85% 45%; 
+  --color-primary-foreground: 0 0% 95%;
+
+  /* Secondary: Military Green */
+  --color-secondary: 80 20% 25%; 
+  --color-secondary-foreground: 0 0% 90%;
+
+  --color-muted: 0 0% 15%;
+  --color-muted-foreground: 0 0% 60%;
+
+  --color-accent: 0 0% 20%;
+  --color-accent-foreground: 0 0% 95%;
+
+  --color-destructive: 0 60% 40%;
+  --color-destructive-foreground: 0 0% 98%;
+
+  --color-border: 0 0% 20%;
+  --color-input: 0 0% 20%;
+  --color-ring: 354 85% 45%;
+
+  /* Sidebar variables (required by some components) */
+  --color-sidebar: 0 0% 8%;
+  --color-sidebar-foreground: 0 0% 95%;
+  --color-sidebar-primary: 354 85% 45%;
+  --color-sidebar-primary-foreground: 0 0% 10%;
+  --color-sidebar-accent: 0 0% 15%;
+  --color-sidebar-accent-foreground: 0 0% 95%;
+  --color-sidebar-border: 0 0% 20%;
+  --color-sidebar-ring: 354 85% 45%;
+
+  --radius-sm: 0px;
+  --radius-md: 0px;
+  --radius-lg: 0px;
+  
+  --font-sans: 'Roboto', sans-serif;
+  --font-display: 'Oswald', sans-serif;
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply font-sans antialiased bg-background text-foreground;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.05'/%3E%3C/svg%3E");
+  }
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-display uppercase tracking-wide;
+  }
+}

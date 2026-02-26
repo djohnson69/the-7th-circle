@@ -1,0 +1,71 @@
+<div class="{% if section.settings.sticky_header %}sticky top-0 z-50{% else %}relative{% endif %} w-full border-b border-[#333333] bg-[#121212]/95 backdrop-blur">
+  <div class="container mx-auto flex h-20 items-center justify-between px-4">
+    
+    <!-- Mobile Menu Trigger (Simplified for Liquid) -->
+    <div class="flex md:hidden">
+      <button class="text-[#f2f2f2]">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-menu"><line x1="4" x2="20" y1="12" y2="12"/><line x1="4" x2="20" y1="6" y2="6"/><line x1="4" x2="20" y1="18" y2="18"/></svg>
+      </button>
+    </div>
+
+    <!-- Logo -->
+    <div class="flex items-center gap-2">
+      <a href="{{ routes.root_url }}" class="flex items-center gap-3 cursor-pointer">
+        {% if section.settings.logo != blank %}
+          <img src="{{ section.settings.logo | img_url: 'master' }}" alt="{{ shop.name }}" class="h-12 w-auto">
+        {% else %}
+          <!-- Fallback if no logo uploaded -->
+          <span class="hidden md:inline font-display text-3xl font-bold tracking-tighter text-[#f2f2f2]">
+            THE 7TH CIRCLE
+          </span>
+        {% endif %}
+      </a>
+    </div>
+
+    <!-- Desktop Nav -->
+    <nav class="hidden md:flex items-center gap-8">
+      {% for link in linklists.main-menu.links %}
+        <a href="{{ link.url }}" class="font-display text-sm font-medium uppercase tracking-widest hover:text-[#D00000] transition-colors">
+          {{ link.title }}
+        </a>
+      {% endfor %}
+    </nav>
+
+    <!-- Actions -->
+    <div class="flex items-center gap-2">
+      <a href="{{ routes.search_url }}" class="text-[#f2f2f2] hover:text-[#D00000] p-2">
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-search"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+      </a>
+      {% if shop.customer_accounts_enabled %}
+        <a href="{{ routes.account_url }}" class="hidden md:flex text-[#f2f2f2] hover:text-[#D00000] p-2">
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-user"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+        </a>
+      {% endif %}
+      <a href="{{ routes.cart_url }}" class="text-[#f2f2f2] hover:text-[#D00000] relative p-2">
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-shopping-cart"><circle cx="8" cy="21" r="1"/><circle cx="19" cy="21" r="1"/><path d="M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.65-7.43H5.12"/></svg>
+        {% if cart.item_count > 0 %}
+          <span class="absolute top-1 right-1 h-2 w-2 rounded-full bg-[#D00000]"></span>
+        {% endif %}
+      </a>
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Header",
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "logo",
+      "label": "Logo"
+    },
+    {
+      "type": "checkbox",
+      "id": "sticky_header",
+      "label": "Sticky Header",
+      "default": true
+    }
+  ]
+}
+{% endschema %}

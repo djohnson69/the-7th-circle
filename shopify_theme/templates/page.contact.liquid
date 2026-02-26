@@ -1,0 +1,54 @@
+<div class="container mx-auto px-4 py-12 max-w-4xl">
+  <h1 class="text-4xl md:text-5xl font-display font-bold uppercase tracking-tighter mb-8 text-[#D00000]">
+    {{ page.title }}
+  </h1>
+  
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-12 max-w-6xl mx-auto">
+    <div>
+      <div class="prose prose-invert prose-lg max-w-none text-gray-400 mb-8">
+        {{ page.content }}
+      </div>
+
+      <div class="space-y-6">
+        
+        <div>
+          <h3 class="font-display text-xl font-bold uppercase tracking-wide text-[#f2f2f2] mb-2">Email</h3>
+          <p class="text-gray-400">
+            support@the7thcircle.us
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <div class="bg-[#1a1a1a] p-8 border border-[#333333]">
+      {% form 'contact' %}
+        {% if form.posted_successfully? %}
+          <p class="mb-4 text-[#D00000]">Message sent successfully.</p>
+        {% endif %}
+
+        {{ form.errors | default_errors }}
+
+        <div class="space-y-6">
+          <div>
+            <label for="ContactFormName" class="block uppercase font-bold tracking-wider mb-2 text-[#f2f2f2]">Name</label>
+            <input type="text" id="ContactFormName" name="contact[name]" placeholder="YOUR NAME" class="w-full bg-[#121212] border border-[#333333] p-3 text-white focus:border-[#D00000] focus:outline-none h-12 font-sans">
+          </div>
+          
+          <div>
+            <label for="ContactFormEmail" class="block uppercase font-bold tracking-wider mb-2 text-[#f2f2f2]">Email</label>
+            <input type="email" id="ContactFormEmail" name="contact[email]" placeholder="YOUR EMAIL" class="w-full bg-[#121212] border border-[#333333] p-3 text-white focus:border-[#D00000] focus:outline-none h-12 font-sans">
+          </div>
+
+          <div>
+            <label for="ContactFormMessage" class="block uppercase font-bold tracking-wider mb-2 text-[#f2f2f2]">Message</label>
+            <textarea rows="6" id="ContactFormMessage" name="contact[body]" placeholder="ENTER YOUR MESSAGE..." class="w-full bg-[#121212] border border-[#333333] p-3 text-white focus:border-[#D00000] focus:outline-none min-h-[150px] font-sans resize-none"></textarea>
+          </div>
+
+          <button type="submit" class="w-full h-14 bg-[#D00000] text-[#1a1a1a] font-display text-lg font-bold uppercase tracking-widest hover:bg-[#D00000]/90 transition-colors">
+            Send Transmission
+          </button>
+        </div>
+      {% endform %}
+    </div>
+  </div>
+</div>

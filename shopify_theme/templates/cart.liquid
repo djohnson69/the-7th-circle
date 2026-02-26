@@ -1,0 +1,53 @@
+<div class="container mx-auto px-4 py-12 max-w-6xl">
+  <h1 class="text-4xl md:text-5xl font-display font-bold uppercase tracking-tighter mb-8 text-[#f2f2f2]">
+    Shopping Cart
+  </h1>
+
+  {% if cart.item_count > 0 %}
+    <form action="/cart" method="post" novalidate>
+      <div class="grid grid-cols-1 lg:grid-cols-3 gap-12">
+        <div class="lg:col-span-2 space-y-6">
+          {% for item in cart.items %}
+            <div class="flex gap-4 border-b border-[#333333] pb-6">
+              <div class="w-24 h-24 bg-[#1a1a1a] flex-shrink-0">
+                <img src="{{ item.image | img_url: 'small' }}" alt="{{ item.title | escape }}" class="w-full h-full object-cover">
+              </div>
+              <div class="flex-1">
+                <h3 class="font-display text-lg font-bold uppercase tracking-wide text-[#f2f2f2]">
+                  <a href="{{ item.url }}">{{ item.product.title }}</a>
+                </h3>
+                <p class="text-sm text-gray-400 mb-2">{{ item.variant.title }}</p>
+                <p class="font-sans font-bold text-[#D00000]">{{ item.price | money }}</p>
+                
+                <div class="flex items-center gap-4 mt-4">
+                  <input type="number" name="updates[]" value="{{ item.quantity }}" min="0" class="w-16 bg-[#121212] border border-[#333333] text-center text-white py-1">
+                  <a href="/cart/change?line={{ forloop.index }}&amp;quantity=0" class="text-xs uppercase tracking-wider text-gray-500 hover:text-[#D00000]">Remove</a>
+                </div>
+              </div>
+            </div>
+          {% endfor %}
+        </div>
+
+        <div class="bg-[#1a1a1a] p-6 border border-[#333333] h-fit">
+          <h2 class="font-display text-xl font-bold uppercase tracking-wide text-[#f2f2f2] mb-4">Summary</h2>
+          <div class="flex justify-between items-center mb-6 text-lg">
+            <span class="text-gray-400">Subtotal</span>
+            <span class="text-[#f2f2f2] font-bold">{{ cart.total_price | money }}</span>
+          </div>
+          <p class="text-xs text-gray-500 mb-6">Taxes and shipping calculated at checkout</p>
+          
+          <button type="submit" name="checkout" class="w-full h-14 bg-[#D00000] text-[#1a1a1a] font-display text-lg font-bold uppercase tracking-widest hover:bg-[#D00000]/90 transition-colors">
+            Proceed to Checkout
+          </button>
+        </div>
+      </div>
+    </form>
+  {% else %}
+    <div class="text-center py-20">
+      <p class="text-gray-400 text-xl mb-8">Your cart is empty.</p>
+      <a href="/collections/all" class="inline-flex h-14 items-center justify-center bg-[#D00000] px-8 text-[#1a1a1a] font-display text-lg font-bold uppercase tracking-widest hover:bg-[#D00000]/90 transition-colors">
+        Start Shopping
+      </a>
+    </div>
+  {% endif %}
+</div>

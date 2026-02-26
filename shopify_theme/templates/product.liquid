@@ -1,0 +1,79 @@
+<div class="container mx-auto px-4 py-12">
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
+    <!-- Product Gallery -->
+    <div class="space-y-4">
+      <div class="aspect-square bg-[#1a1a1a] overflow-hidden">
+        <img src="{{ product.featured_image | img_url: 'master' }}" alt="{{ product.title }}" class="w-full h-full object-cover">
+      </div>
+      <div class="grid grid-cols-4 gap-4">
+        {% for image in product.images %}
+          <div class="aspect-square bg-[#1a1a1a] overflow-hidden cursor-pointer border border-transparent hover:border-[#D00000]">
+            <img src="{{ image | img_url: 'medium' }}" alt="{{ image.alt }}" class="w-full h-full object-cover">
+          </div>
+        {% endfor %}
+      </div>
+    </div>
+
+    <!-- Product Info -->
+    <div class="flex flex-col">
+      <h1 class="text-4xl md:text-5xl font-display font-bold uppercase tracking-tighter text-[#f2f2f2] mb-2">
+        {{ product.title }}
+      </h1>
+      <div class="text-2xl text-[#D00000] font-sans font-bold mb-6">
+        {{ product.price | money }}
+      </div>
+
+      <div class="prose prose-invert text-gray-400 mb-8">
+        {{ product.description }}
+      </div>
+      
+      <!-- Add to Cart Form -->
+      {% form 'product', product %}
+        <input type="hidden" name="id" value="{{ product.selected_or_first_available_variant.id }}">
+        
+        <div class="mb-8">
+          {% unless product.has_only_default_variant %}
+            {% for option in product.options_with_values %}
+              <div class="mb-4">
+                <label class="block text-sm font-bold uppercase tracking-wider text-gray-400 mb-2">
+                  {{ option.name }}
+                </label>
+                <div class="flex flex-wrap gap-2">
+                  {% for value in option.values %}
+                    <div class="relative">
+                      <input 
+                        type="radio" 
+                        id="Option{{ option.position }}-{{ forloop.index0 }}" 
+                        name="options[{{ option.name }}]" 
+                        value="{{ value }}"
+                        {% if option.selected_value == value %}checked{% endif %}
+                        class="peer sr-only"
+                      >
+                      <label 
+                        for="Option{{ option.position }}-{{ forloop.index0 }}" 
+                        class="block cursor-pointer border border-[#333333] px-4 py-2 text-sm font-bold uppercase text-gray-400 peer-checked:border-[#D00000] peer-checked:bg-[#D00000] peer-checked:text-[#1a1a1a] hover:border-gray-500"
+                      >
+                        {{ value }}
+                      </label>
+                    </div>
+                  {% endfor %}
+                </div>
+              </div>
+            {% endfor %}
+          {% endunless %}
+        </div>
+
+        <button type="submit" name="add" class="w-full h-14 bg-[#D00000] text-[#1a1a1a] font-display text-xl font-bold uppercase tracking-widest hover:bg-[#D00000]/90 transition-colors mb-4">
+          Add to Cart
+        </button>
+      {% endform %}
+
+      <div class="border-t border-[#333333] pt-6 mt-6">
+        <div class="flex items-center gap-2 text-sm text-gray-500 uppercase tracking-wider">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+          Secure Checkout
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
